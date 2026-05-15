@@ -1,85 +1,117 @@
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #f7f7fb;
+  font-family: Arial, sans-serif;
+  background: #0f1115;
+  color: white;
 }
 
-/* PAGE LAYOUT (safe) */
 .page {
-  padding: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-/* HEADER */
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.button-row button {
-  margin-left: 8px;
-}
-
-/* MAIN LAYOUT (SAFE FLEX USAGE) */
-.main-layout {
-  display: flex;
-  gap: 30px;
   align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
 }
 
-/* LEFT PANEL = SDK ISOLATION ZONE */
-.left-panel {
-  flex: 1.1;
-  min-width: 380px;
-
-  /* IMPORTANT: isolate layout from flex side effects */
-  display: block;
+.subtitle {
+  color: #9ca3af;
 }
 
-/* SDK CONTAINER (MOST IMPORTANT PART) */
-#embeddedpayments {
-  width: 100%;
-  height: 650px;
-
-  /* critical stability rules */
-  display: block;
-  overflow: hidden;
+.button-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-/* RIGHT PANEL */
-.right-panel {
-  flex: 1;
-  max-width: 420px;
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: #e60000;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-/* FORM STYLING (safe to keep) */
-.section {
-  margin-bottom: 20px;
+button.secondary {
+  background: #27272a;
+}
+
+.render-section {
+  display: none;
+  margin-bottom: 24px;
+}
+
+.render-card,
+.card {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.config-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 label {
   display: block;
-  margin-top: 10px;
-  font-size: 13px;
+  margin-top: 14px;
+  margin-bottom: 6px;
 }
 
-input, select {
+input,
+select {
   width: 100%;
-  padding: 6px;
-  margin-top: 4px;
-  font-family: inherit;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #3f3f46;
+  background: #09090b;
+  color: white;
 }
 
 .checkbox-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
+  gap: 10px;
+  margin-top: 14px;
 }
 
-pre {
-  padding: 10px;
+.checkbox-row input {
+  width: auto;
+}
+
+#wallets-container,
+#embedded-container {
+  min-height: 140px;
+  border: 2px dashed #3f3f46;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+#embedded-container {
+  min-height: 350px;
+}
+
+#merchant-status,
+#payload-preview {
+  background: #09090b;
+  border-radius: 10px;
+  padding: 12px;
+  white-space: pre-wrap;
   overflow: auto;
-  font-size: 12px;
+  color: #7dd3fc;
 }
