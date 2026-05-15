@@ -9,6 +9,8 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background: #f7f7fb;
+      color: #111;
     }
 
     .page {
@@ -17,89 +19,121 @@
       flex-direction: column;
     }
 
+    /* HEADER */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 20px;
-      border-bottom: 1px solid #eee;
+      padding: 14px 18px;
+      background: white;
     }
 
     .button-row button {
       margin-left: 8px;
+      padding: 6px 10px;
     }
 
-    /* MAIN LAYOUT FULL HEIGHT */
+    /* MAIN LAYOUT */
     .main-layout {
       flex: 1;
       display: flex;
-      height: calc(100vh - 70px);
+      height: calc(100vh - 64px);
+      gap: 16px;
+      padding: 16px;
     }
 
-    /* LEFT SIDE (SDK) */
+    /* LEFT: SDK */
     .left-panel {
       flex: 1.2;
-      padding: 16px;
-      overflow: hidden;
+      background: white;
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
     }
 
     #embeddedpayments {
-      width: 100%;
-      height: 100%;
+      flex: 1;
       min-height: 0;
     }
 
-    /* RIGHT SIDE (CONFIG FULL HEIGHT) */
+    /* RIGHT PANEL */
     .right-panel {
       flex: 1;
-      max-width: 420px;
-      border-left: 1px solid #eee;
-      padding: 16px;
+      max-width: 520px;
+      background: white;
+      border-radius: 10px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      height: 100%;
+    }
+
+    /* 🔥 GRID CONFIG LAYOUT */
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      flex: 1;
       overflow: hidden;
     }
 
-    .config-scroll {
-      overflow-y: auto;
-      flex: 1;
-      padding-right: 8px;
+    .config-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h3 {
+      margin: 6px 0 8px;
+      font-size: 14px;
     }
 
     label {
-      display: block;
-      margin-top: 10px;
-      font-size: 13px;
+      font-size: 12px;
+      margin-top: 6px;
+      color: #333;
     }
 
     input, select {
       width: 100%;
       padding: 6px;
-      margin-top: 4px;
+      font-size: 12px;
+      margin-top: 3px;
     }
 
     .checkbox-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 6px;
+      gap: 6px;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* FULL WIDTH SECTIONS */
+    .full-width {
+      grid-column: span 2;
     }
 
     pre {
-      padding: 10px;
-      font-size: 12px;
+      font-size: 11px;
+      background: #f4f4f4;
+      padding: 8px;
+      border-radius: 6px;
       overflow: auto;
+      max-height: 140px;
     }
 
     /* DYNAMIC PANELS */
     .dynamic-panel {
       display: none;
-      margin-top: 20px;
     }
 
     .dynamic-panel.active {
       display: block;
+    }
+
+    #wallets-container,
+    #merchant-status {
+      margin-top: 6px;
     }
   </style>
 </head>
@@ -107,151 +141,152 @@
 <body>
   <div class="page">
 
-    <header class="header">
+    <!-- HEADER -->
+    <div class="header">
       <div>
-        <h1>Deluxe Embedded Payments Tester</h1>
+        <h2 style="margin:0;">Deluxe Embedded Payments Tester</h2>
       </div>
 
       <div class="button-row">
-        <button id="render-wallets-btn">Render Wallets</button>
-        <button id="render-embedded-btn">Render Embedded Payments</button>
-        <button id="merchant-status-btn">Get Merchant Status</button>
+        <button id="render-wallets-btn">Wallets</button>
+        <button id="render-embedded-btn">Render</button>
+        <button id="merchant-status-btn">Merchant</button>
         <button id="clear-btn">Clear</button>
       </div>
-    </header>
+    </div>
 
+    <!-- MAIN -->
     <div class="main-layout">
 
-      <!-- LEFT: SDK -->
+      <!-- LEFT -->
       <div class="left-panel">
         <div id="embeddedpayments"></div>
       </div>
 
-      <!-- RIGHT: CONFIG (FULL HEIGHT) -->
+      <!-- RIGHT -->
       <div class="right-panel">
 
-        <div class="config-scroll">
+        <div class="config-grid">
 
-          <h3>Merchant Configuration</h3>
+          <!-- Merchant -->
+          <div class="config-section">
+            <h3>Merchant</h3>
 
-          <label>Access Token</label>
-          <input id="accessToken"/>
+            <label>Access Token</label>
+            <input id="accessToken"/>
 
-          <label>Secret Key</label>
-          <input id="secretKey"/>
+            <label>Secret Key</label>
+            <input id="secretKey"/>
 
-          <label>Amount</label>
-          <input id="amount" value="1.00"/>
+            <label>Amount</label>
+            <input id="amount" value="1.00"/>
 
-          <label>Apple Pay Style</label>
-          <select id="applePayStyle">
-            <option value="plain">plain</option>
-            <option value="black">black</option>
-            <option value="white">white</option>
-          </select>
+            <label>Apple Pay</label>
+            <select id="applePayStyle">
+              <option value="plain">plain</option>
+              <option value="black">black</option>
+              <option value="white">white</option>
+            </select>
 
-          <label>Google Pay Style</label>
-          <select id="googlePayStyle">
-            <option value="plain">plain</option>
-            <option value="black">black</option>
-            <option value="white">white</option>
-          </select>
-
-          <h3 style="margin-top:20px;">Customer</h3>
-
-          <label>First Name</label>
-          <input id="firstName"/>
-
-          <label>Last Name</label>
-          <input id="lastName"/>
-
-          <label>Email</label>
-          <input id="email"/>
-
-          <label>Address</label>
-          <input id="billingAddress"/>
-
-          <label>City</label>
-          <input id="billingCity"/>
-
-          <label>State</label>
-          <input id="billingState"/>
-
-          <label>Zip</label>
-          <input id="billingZipCode"/>
-
-          <label>Country Code</label>
-          <input id="billingCountryCode" value="USA"/>
-
-          <h3 style="margin-top:20px;">Wallet Options</h3>
-
-          <div class="checkbox-row">
-            <input type="checkbox" id="hideApple"/>
-            <label for="hideApple">Hide Apple Pay</label>
+            <label>Google Pay</label>
+            <select id="googlePayStyle">
+              <option value="plain">plain</option>
+              <option value="black">black</option>
+              <option value="white">white</option>
+            </select>
           </div>
 
-          <div class="checkbox-row">
-            <input type="checkbox" id="hideGoogle"/>
-            <label for="hideGoogle">Hide Google Pay</label>
+          <!-- Customer -->
+          <div class="config-section">
+            <h3>Customer</h3>
+
+            <label>First Name</label>
+            <input id="firstName"/>
+
+            <label>Last Name</label>
+            <input id="lastName"/>
+
+            <label>Email</label>
+            <input id="email"/>
+
+            <label>Address</label>
+            <input id="billingAddress"/>
+
+            <label>City</label>
+            <input id="billingCity"/>
+
+            <label>State</label>
+            <input id="billingState"/>
+
+            <label>Zip</label>
+            <input id="billingZipCode"/>
+
+            <label>Country</label>
+            <input id="billingCountryCode" value="USA"/>
           </div>
 
-          <div class="checkbox-row">
-            <input type="checkbox" id="hidePaze"/>
-            <label for="hidePaze">Hide Paze</label>
+          <!-- Wallet Options -->
+          <div class="config-section full-width">
+            <h3>Wallet Options</h3>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="hideApple"/>
+              <label>Apple Pay</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="hideGoogle"/>
+              <label>Google Pay</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="hidePaze"/>
+              <label>Paze</label>
+            </div>
+
+            <div class="checkbox-row">
+              <input type="checkbox" id="hideChariot"/>
+              <label>Chariot</label>
+            </div>
           </div>
 
-          <div class="checkbox-row">
-            <input type="checkbox" id="hideChariot"/>
-            <label for="hideChariot">Hide Chariot</label>
-          </div>
-
-          <div class="checkbox-row">
-            <input type="checkbox" id="savePaymentMethod"/>
-            <label for="savePaymentMethod">Save Payment Method</label>
-          </div>
-
-          <div class="checkbox-row">
-            <input type="checkbox" id="generateToken"/>
-            <label for="generateToken">Generate Token</label>
-          </div>
-
-          <!-- 🔥 DYNAMIC SECTIONS (ONLY SHOW ON BUTTON CLICK) -->
-
-          <div id="wallets-panel" class="dynamic-panel">
-            <h3>Wallets Output</h3>
+          <!-- OUTPUTS -->
+          <div id="wallets-panel" class="config-section full-width dynamic-panel">
+            <h3>Wallet Output</h3>
             <div id="wallets-container"></div>
           </div>
 
-          <div id="merchant-panel" class="dynamic-panel">
+          <div id="merchant-panel" class="config-section full-width dynamic-panel">
             <h3>Merchant Status</h3>
             <pre id="merchant-status"></pre>
           </div>
 
         </div>
+
       </div>
 
     </div>
+
   </div>
 
   <script src="https://payments2.deluxe.com/embedded/javascripts/deluxe.js"></script>
   <script type="module" src="app.js"></script>
 
   <script>
-
-    document.getElementById("render-wallets-btn").addEventListener("click", () => {
+    document.getElementById("render-wallets-btn").onclick = () => {
       document.getElementById("wallets-panel").classList.add("active");
       document.getElementById("merchant-panel").classList.remove("active");
-    });
+    };
 
-    document.getElementById("merchant-status-btn").addEventListener("click", () => {
+    document.getElementById("merchant-status-btn").onclick = () => {
       document.getElementById("merchant-panel").classList.add("active");
       document.getElementById("wallets-panel").classList.remove("active");
-    });
+    };
 
-    document.getElementById("clear-btn").addEventListener("click", () => {
+    document.getElementById("clear-btn").onclick = () => {
       document.getElementById("wallets-panel").classList.remove("active");
       document.getElementById("merchant-panel").classList.remove("active");
-    });
+    };
   </script>
 
 </body>
