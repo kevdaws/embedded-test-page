@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deluxe Payments SDK Tester</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+  <div class="page">
+
+    <header class="header">
+      <div>
+        <h1>Deluxe Embedded Payments Tester</h1>
+        <p class="subtitle">Vanilla JS SDK Playground</p>
+      </div>
+
+      <div class="button-row">
+        <button id="render-wallets-btn">Render Wallets</button>
+        <button id="render-embedded-btn">Render Embedded Payments</button>
+        <button id="merchant-status-btn">Get Merchant Status</button>
+        <button id="clear-btn" class="secondary">Clear</button>
+      </div>
+    </header>
+
+    <!-- ✅ OFFICIAL DELUXE CONTAINER -->
+    <div id="embeddedpayments"></div>
+
+    <section class="render-section" id="render-section">
+      <div class="render-card" id="wallet-card">
+        <h2>Wallet Render Container</h2>
+        <div id="wallets-container"></div>
+      </div>
+
+      <div class="render-card" id="embedded-card">
+        <h2>Embedded Payments Container (Legacy)</h2>
+        <div id="embedded-container"></div>
+      </div>
+
+      <div class="render-card" id="merchant-card">
+        <h2>Merchant Status</h2>
+        <pre id="merchant-status"></pre>
+      </div>
+    </section>
+
+    <section class="config-grid">
+      <div class="card">
+        <h2>Merchant Configuration</h2>
+
+        <label>Access Token</label>
+        <input id="accessToken"/>
+
+        <label>Secret Key</label>
+        <input id="secretKey"/>
+
+        <label>Amount</label>
+        <input id="amount" value="1.00"/>
+
+        <label>Apple Pay Style</label>
+        <select id="applePayStyle">
+          <option value="plain">plain</option>
+          <option value="black">black</option>
+          <option value="white">white</option>
+        </select>
+
+        <label>Google Pay Style</label>
+        <select id="googlePayStyle">
+          <option value="plain">plain</option>
+          <option value="black">black</option>
+          <option value="white">white</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h2>Customer</h2>
+
+        <label>First Name</label>
+        <input id="firstName"/>
+
+        <label>Last Name</label>
+        <input id="lastName"/>
+
+        <label>Email</label>
+        <input id="email"/>
+
+        <label>Address</label>
+        <input id="billingAddress"/>
+
+        <label>City</label>
+        <input id="billingCity"/>
+
+        <label>State</label>
+        <input id="billingState"/>
+
+        <label>Zip</label>
+        <input id="billingZipCode"/>
+
+        <label>Country Code</label>
+        <input id="billingCountryCode" value="USA"/>
+      </div>
+
+      <div class="card">
+        <h2>Wallet Options</h2>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="hideApple"/>
+          <label for="hideApple">Hide Apple Pay</label>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="hideGoogle"/>
+          <label for="hideGoogle">Hide Google Pay</label>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="hidePaze"/>
+          <label for="hidePaze">Hide Paze</label>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="hideChariot"/>
+          <label for="hideChariot">Hide Chariot</label>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="savePaymentMethod"/>
+          <label for="savePaymentMethod">Save Payment Method</label>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="generateToken"/>
+          <label for="generateToken">Generate Token</label>
+        </div>
+
+        <div class="jwt-panel">
+          <h3>Payload Preview</h3>
+          <pre id="payload-preview"></pre>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ✅ OFFICIAL SDK -->
+  <script src="https://payments2.deluxe.com/embedded/javascripts/deluxe.js"></script>
+
+  <!-- your app -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
