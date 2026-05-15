@@ -54,7 +54,8 @@ function renderEmbeddedPayments() {
       });
 
       instance.render({
-        containerId: "embeddedpayments"
+        containerId: "embeddedpayments",
+        paymentpanelcolor: "#0f1115"
       });
     })
     .catch((err) => {
