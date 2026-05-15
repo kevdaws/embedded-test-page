@@ -10,7 +10,6 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f6f7fb;
     }
 
     .page {
@@ -28,75 +27,59 @@
       margin-left: 8px;
     }
 
-    /* 🔥 MAIN LAYOUT */
+    /* 🔥 CLEAN 2-COLUMN LAYOUT */
     .main-layout {
       display: flex;
-      gap: 20px;
+      gap: 30px;
       align-items: flex-start;
     }
 
-    /* LEFT SIDE (Embedded Payments) */
     .left-panel {
-      flex: 1.2;
-      min-width: 420px;
+      flex: 1.1;
+      min-width: 380px;
     }
 
-    .render-card {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      margin-bottom: 16px;
-    }
-
-    #embeddedpayments {
-      min-height: 500px;
-    }
-
-    /* RIGHT SIDE (Config) */
     .right-panel {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
       max-width: 420px;
     }
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    /* 🔥 REMOVE CARD LOOKS */
+    .section {
+      margin-bottom: 20px;
+    }
+
+    /* 🔥 EMBEDDED CONTAINER SMALLER */
+    #embeddedpayments {
+      width: 100%;
+      min-height: 380px;
+      max-height: 420px;
+      overflow: hidden;
     }
 
     label {
       display: block;
       margin-top: 10px;
       font-size: 13px;
-      color: #444;
     }
 
     input, select {
       width: 100%;
-      padding: 8px;
+      padding: 6px;
       margin-top: 4px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
     }
 
     .checkbox-row {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     pre {
-      background: #111;
-      color: #0f0;
       padding: 10px;
-      border-radius: 8px;
       overflow: auto;
+      font-size: 12px;
     }
   </style>
 </head>
@@ -114,27 +97,27 @@
         <button id="render-wallets-btn">Render Wallets</button>
         <button id="render-embedded-btn">Render Embedded Payments</button>
         <button id="merchant-status-btn">Get Merchant Status</button>
-        <button id="clear-btn" class="secondary">Clear</button>
+        <button id="clear-btn">Clear</button>
       </div>
     </header>
 
-    <!-- 🔥 NEW TWO COLUMN LAYOUT -->
+    <!-- 🔥 CLEAN LAYOUT -->
     <div class="main-layout">
 
-      <!-- LEFT: EMBEDDED FORM -->
+      <!-- LEFT: SDK -->
       <div class="left-panel">
 
-        <div class="render-card">
+        <div class="section">
           <h2>Embedded Payments</h2>
           <div id="embeddedpayments"></div>
         </div>
 
-        <div class="render-card">
-          <h2>Wallet Render Container</h2>
+        <div class="section">
+          <h2>Wallets</h2>
           <div id="wallets-container"></div>
         </div>
 
-        <div class="render-card">
+        <div class="section">
           <h2>Merchant Status</h2>
           <pre id="merchant-status"></pre>
         </div>
@@ -144,7 +127,7 @@
       <!-- RIGHT: CONFIG -->
       <div class="right-panel">
 
-        <div class="card">
+        <div class="section">
           <h2>Merchant Configuration</h2>
 
           <label>Access Token</label>
@@ -171,7 +154,7 @@
           </select>
         </div>
 
-        <div class="card">
+        <div class="section">
           <h2>Customer</h2>
 
           <label>First Name</label>
@@ -199,7 +182,7 @@
           <input id="billingCountryCode" value="USA"/>
         </div>
 
-        <div class="card">
+        <div class="section">
           <h2>Wallet Options</h2>
 
           <div class="checkbox-row">
@@ -232,7 +215,7 @@
             <label for="generateToken">Generate Token</label>
           </div>
 
-          <div class="jwt-panel">
+          <div class="section">
             <h3>Payload Preview</h3>
             <pre id="payload-preview"></pre>
           </div>
