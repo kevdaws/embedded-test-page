@@ -6,17 +6,21 @@
   <title>Deluxe Payments SDK Tester</title>
 
   <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #151922;
+      --panel-2: #1b2130;
+      --text: #e6e8ee;
+      --muted: #9aa3b2;
+      --border: rgba(255,255,255,0.08);
+      --accent: #4f7cff;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f7f7fb;
-      color: #111;
-    }
-
-    .page {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background: var(--bg);
+      color: var(--text);
     }
 
     /* HEADER */
@@ -25,151 +29,161 @@
       justify-content: space-between;
       align-items: center;
       padding: 14px 18px;
-      background: white;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
     }
 
     .button-row button {
       margin-left: 8px;
-      padding: 6px 10px;
+      padding: 7px 12px;
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .button-row button:hover {
+      border-color: var(--accent);
     }
 
     /* MAIN LAYOUT */
     .main-layout {
-      flex: 1;
       display: flex;
-      height: calc(100vh - 64px);
-      gap: 16px;
-      padding: 16px;
+      height: calc(100vh - 70px);
     }
 
-    /* LEFT: SDK */
+    /* LEFT SDK */
     .left-panel {
       flex: 1.2;
-      background: white;
-      border-radius: 10px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
+      padding: 14px;
+      overflow: hidden;
     }
 
     #embeddedpayments {
-      flex: 1;
-      min-height: 0;
+      width: 100%;
+      height: 100%;
     }
 
     /* RIGHT PANEL */
     .right-panel {
       flex: 1;
-      max-width: 520px;
-      background: white;
-      border-radius: 10px;
-      padding: 12px;
+      max-width: 460px;
+      border-left: 1px solid var(--border);
+      background: var(--panel);
       display: flex;
       flex-direction: column;
     }
 
-    /* 🔥 GRID CONFIG LAYOUT */
+    /* CONFIG GRID */
+    .config-scroll {
+      padding: 14px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
     .config-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    .config-section {
-      display: flex;
-      flex-direction: column;
+      gap: 12px;
     }
 
     h3 {
-      margin: 6px 0 8px;
-      font-size: 14px;
+      margin: 10px 0 8px;
+      font-size: 13px;
+      color: var(--text);
     }
 
     label {
-      font-size: 12px;
-      margin-top: 6px;
-      color: #333;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+      display: block;
     }
 
     input, select {
       width: 100%;
-      padding: 6px;
+      padding: 7px;
+      margin-top: 4px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
       font-size: 12px;
-      margin-top: 3px;
     }
 
     .checkbox-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-size: 12px;
-      margin-top: 4px;
+      margin-top: 6px;
+      color: var(--text);
     }
 
-    /* FULL WIDTH SECTIONS */
-    .full-width {
+    .full {
       grid-column: span 2;
     }
 
     pre {
-      font-size: 11px;
-      background: #f4f4f4;
-      padding: 8px;
+      background: #0b0e13;
+      padding: 10px;
       border-radius: 6px;
+      font-size: 11px;
       overflow: auto;
-      max-height: 140px;
+      border: 1px solid var(--border);
     }
 
     /* DYNAMIC PANELS */
     .dynamic-panel {
       display: none;
+      margin-top: 14px;
     }
 
     .dynamic-panel.active {
       display: block;
     }
-
-    #wallets-container,
-    #merchant-status {
-      margin-top: 6px;
-    }
   </style>
 </head>
 
 <body>
-  <div class="page">
 
-    <!-- HEADER -->
-    <div class="header">
-      <div>
-        <h2 style="margin:0;">Deluxe Embedded Payments Tester</h2>
-      </div>
-
-      <div class="button-row">
-        <button id="render-wallets-btn">Wallets</button>
-        <button id="render-embedded-btn">Render</button>
-        <button id="merchant-status-btn">Merchant</button>
-        <button id="clear-btn">Clear</button>
-      </div>
+  <div class="header">
+    <div>
+      <div style="font-size:16px;">Deluxe Embedded Payments Tester</div>
+      <div class="subtitle">Vanilla JS SDK Playground</div>
     </div>
 
-    <!-- MAIN -->
-    <div class="main-layout">
+    <div class="button-row">
+      <button id="render-wallets-btn">Render Wallets</button>
+      <button id="render-embedded-btn">Render Embedded Payments</button>
+      <button id="merchant-status-btn">Get Merchant Status</button>
+      <button id="clear-btn">Clear</button>
+    </div>
+  </div>
 
-      <!-- LEFT -->
-      <div class="left-panel">
-        <div id="embeddedpayments"></div>
-      </div>
+  <div class="main-layout">
 
-      <!-- RIGHT -->
-      <div class="right-panel">
+    <!-- LEFT -->
+    <div class="left-panel">
+      <div id="embeddedpayments"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-panel">
+
+      <div class="config-scroll">
 
         <div class="config-grid">
 
           <!-- Merchant -->
-          <div class="config-section">
+          <div>
             <h3>Merchant</h3>
 
             <label>Access Token</label>
@@ -183,21 +197,21 @@
 
             <label>Apple Pay</label>
             <select id="applePayStyle">
-              <option value="plain">plain</option>
-              <option value="black">black</option>
-              <option value="white">white</option>
+              <option>plain</option>
+              <option>black</option>
+              <option>white</option>
             </select>
 
             <label>Google Pay</label>
             <select id="googlePayStyle">
-              <option value="plain">plain</option>
-              <option value="black">black</option>
-              <option value="white">white</option>
+              <option>plain</option>
+              <option>black</option>
+              <option>white</option>
             </select>
           </div>
 
           <!-- Customer -->
-          <div class="config-section">
+          <div>
             <h3>Customer</h3>
 
             <label>First Name</label>
@@ -226,37 +240,22 @@
           </div>
 
           <!-- Wallet Options -->
-          <div class="config-section full-width">
+          <div class="full">
             <h3>Wallet Options</h3>
 
-            <div class="checkbox-row">
-              <input type="checkbox" id="hideApple"/>
-              <label>Apple Pay</label>
-            </div>
-
-            <div class="checkbox-row">
-              <input type="checkbox" id="hideGoogle"/>
-              <label>Google Pay</label>
-            </div>
-
-            <div class="checkbox-row">
-              <input type="checkbox" id="hidePaze"/>
-              <label>Paze</label>
-            </div>
-
-            <div class="checkbox-row">
-              <input type="checkbox" id="hideChariot"/>
-              <label>Chariot</label>
-            </div>
+            <div class="checkbox-row"><input type="checkbox" id="hideApple"/> Apple Pay</div>
+            <div class="checkbox-row"><input type="checkbox" id="hideGoogle"/> Google Pay</div>
+            <div class="checkbox-row"><input type="checkbox" id="hidePaze"/> Paze</div>
+            <div class="checkbox-row"><input type="checkbox" id="hideChariot"/> Chariot</div>
           </div>
 
           <!-- OUTPUTS -->
-          <div id="wallets-panel" class="config-section full-width dynamic-panel">
+          <div id="wallets-panel" class="full dynamic-panel">
             <h3>Wallet Output</h3>
             <div id="wallets-container"></div>
           </div>
 
-          <div id="merchant-panel" class="config-section full-width dynamic-panel">
+          <div id="merchant-panel" class="full dynamic-panel">
             <h3>Merchant Status</h3>
             <pre id="merchant-status"></pre>
           </div>
@@ -264,7 +263,6 @@
         </div>
 
       </div>
-
     </div>
 
   </div>
