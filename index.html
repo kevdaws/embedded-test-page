@@ -4,262 +4,221 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Deluxe Payments SDK Tester</title>
+  <link rel="stylesheet" href="styles.css"/>
 
   <style>
-    :root {
-      --bg: #0f1115;
-      --panel: #151922;
-      --panel-2: #1b2130;
-      --text: #e6e8ee;
-      --muted: #9aa3b2;
-      --border: rgba(255,255,255,0.08);
-      --accent: #4f7cff;
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
     }
 
-    /* HEADER */
+    .page {
+      padding: 20px;
+    }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
-      background: var(--panel);
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
+      margin-bottom: 20px;
     }
 
     .button-row button {
       margin-left: 8px;
-      padding: 7px 12px;
-      background: var(--panel-2);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      cursor: pointer;
     }
 
-    .button-row button:hover {
-      border-color: var(--accent);
-    }
-
-    /* MAIN LAYOUT */
+    /* 🔥 CLEAN 2-COLUMN LAYOUT */
     .main-layout {
       display: flex;
-      height: calc(100vh - 70px);
+      gap: 30px;
+      align-items: flex-start;
     }
 
-    /* LEFT SDK */
     .left-panel {
-      flex: 1.2;
-      padding: 14px;
+      flex: 1.1;
+      min-width: 380px;
+    }
+
+    .right-panel {
+      flex: 1;
+      max-width: 420px;
+    }
+
+    /* 🔥 REMOVE CARD LOOKS */
+    .section {
+      margin-bottom: 20px;
+    }
+
+    /* 🔥 EMBEDDED CONTAINER SMALLER */
+    #embeddedpayments {
+      width: 100%;
+      min-height: 380px;
+      max-height: 420px;
       overflow: hidden;
     }
 
-    #embeddedpayments {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* RIGHT PANEL */
-    .right-panel {
-      flex: 1;
-      max-width: 460px;
-      border-left: 1px solid var(--border);
-      background: var(--panel);
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* CONFIG GRID */
-    .config-scroll {
-      padding: 14px;
-      overflow-y: auto;
-      flex: 1;
-    }
-
-    .config-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    h3 {
-      margin: 10px 0 8px;
-      font-size: 13px;
-      color: var(--text);
-    }
-
     label {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 8px;
       display: block;
+      margin-top: 10px;
+      font-size: 13px;
     }
 
     input, select {
       width: 100%;
-      padding: 7px;
+      padding: 6px;
       margin-top: 4px;
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-size: 12px;
     }
 
     .checkbox-row {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
       margin-top: 6px;
-      color: var(--text);
-    }
-
-    .full {
-      grid-column: span 2;
     }
 
     pre {
-      background: #0b0e13;
       padding: 10px;
-      border-radius: 6px;
-      font-size: 11px;
       overflow: auto;
-      border: 1px solid var(--border);
-    }
-
-    /* DYNAMIC PANELS */
-    .dynamic-panel {
-      display: none;
-      margin-top: 14px;
-    }
-
-    .dynamic-panel.active {
-      display: block;
+      font-size: 12px;
     }
   </style>
 </head>
 
 <body>
+  <div class="page">
 
-  <div class="header">
-    <div>
-      <div style="font-size:16px;">Deluxe Embedded Payments Tester</div>
-      <div class="subtitle">Vanilla JS SDK Playground</div>
-    </div>
+    <header class="header">
+      <div>
+        <h1>Deluxe Embedded Payments Tester</h1>
+        <p class="subtitle">Vanilla JS SDK Playground</p>
+      </div>
 
-    <div class="button-row">
-      <button id="render-wallets-btn">Render Wallets</button>
-      <button id="render-embedded-btn">Render Embedded Payments</button>
-      <button id="merchant-status-btn">Get Merchant Status</button>
-      <button id="clear-btn">Clear</button>
-    </div>
-  </div>
+      <div class="button-row">
+        <button id="render-wallets-btn">Render Wallets</button>
+        <button id="render-embedded-btn">Render Embedded Payments</button>
+        <button id="merchant-status-btn">Get Merchant Status</button>
+        <button id="clear-btn">Clear</button>
+      </div>
+    </header>
 
-  <div class="main-layout">
+    <!-- 🔥 CLEAN LAYOUT -->
+    <div class="main-layout">
 
-    <!-- LEFT -->
-    <div class="left-panel">
-      <div id="embeddedpayments"></div>
-    </div>
+      <!-- LEFT: SDK -->
+      <div class="left-panel">
 
-    <!-- RIGHT -->
-    <div class="right-panel">
+        <div class="section">
+          <h2>Embedded Payments</h2>
+          <div id="embeddedpayments"></div>
+        </div>
 
-      <div class="config-scroll">
+        <div class="section">
+          <h2>Wallets</h2>
+          <div id="wallets-container"></div>
+        </div>
 
-        <div class="config-grid">
+        <div class="section">
+          <h2>Merchant Status</h2>
+          <pre id="merchant-status"></pre>
+        </div>
 
-          <!-- Merchant -->
-          <div>
-            <h3>Merchant</h3>
+      </div>
 
-            <label>Access Token</label>
-            <input id="accessToken"/>
+      <!-- RIGHT: CONFIG -->
+      <div class="right-panel">
 
-            <label>Secret Key</label>
-            <input id="secretKey"/>
+        <div class="section">
+          <h2>Merchant Configuration</h2>
 
-            <label>Amount</label>
-            <input id="amount" value="1.00"/>
+          <label>Access Token</label>
+          <input id="accessToken"/>
 
-            <label>Apple Pay</label>
-            <select id="applePayStyle">
-              <option>plain</option>
-              <option>black</option>
-              <option>white</option>
-            </select>
+          <label>Secret Key</label>
+          <input id="secretKey"/>
 
-            <label>Google Pay</label>
-            <select id="googlePayStyle">
-              <option>plain</option>
-              <option>black</option>
-              <option>white</option>
-            </select>
+          <label>Amount</label>
+          <input id="amount" value="1.00"/>
+
+          <label>Apple Pay Style</label>
+          <select id="applePayStyle">
+            <option value="plain">plain</option>
+            <option value="black">black</option>
+            <option value="white">white</option>
+          </select>
+
+          <label>Google Pay Style</label>
+          <select id="googlePayStyle">
+            <option value="plain">plain</option>
+            <option value="black">black</option>
+            <option value="white">white</option>
+          </select>
+        </div>
+
+        <div class="section">
+          <h2>Customer</h2>
+
+          <label>First Name</label>
+          <input id="firstName"/>
+
+          <label>Last Name</label>
+          <input id="lastName"/>
+
+          <label>Email</label>
+          <input id="email"/>
+
+          <label>Address</label>
+          <input id="billingAddress"/>
+
+          <label>City</label>
+          <input id="billingCity"/>
+
+          <label>State</label>
+          <input id="billingState"/>
+
+          <label>Zip</label>
+          <input id="billingZipCode"/>
+
+          <label>Country Code</label>
+          <input id="billingCountryCode" value="USA"/>
+        </div>
+
+        <div class="section">
+          <h2>Wallet Options</h2>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="hideApple"/>
+            <label for="hideApple">Hide Apple Pay</label>
           </div>
 
-          <!-- Customer -->
-          <div>
-            <h3>Customer</h3>
-
-            <label>First Name</label>
-            <input id="firstName"/>
-
-            <label>Last Name</label>
-            <input id="lastName"/>
-
-            <label>Email</label>
-            <input id="email"/>
-
-            <label>Address</label>
-            <input id="billingAddress"/>
-
-            <label>City</label>
-            <input id="billingCity"/>
-
-            <label>State</label>
-            <input id="billingState"/>
-
-            <label>Zip</label>
-            <input id="billingZipCode"/>
-
-            <label>Country</label>
-            <input id="billingCountryCode" value="USA"/>
+          <div class="checkbox-row">
+            <input type="checkbox" id="hideGoogle"/>
+            <label for="hideGoogle">Hide Google Pay</label>
           </div>
 
-          <!-- Wallet Options -->
-          <div class="full">
-            <h3>Wallet Options</h3>
-
-            <div class="checkbox-row"><input type="checkbox" id="hideApple"/> Apple Pay</div>
-            <div class="checkbox-row"><input type="checkbox" id="hideGoogle"/> Google Pay</div>
-            <div class="checkbox-row"><input type="checkbox" id="hidePaze"/> Paze</div>
-            <div class="checkbox-row"><input type="checkbox" id="hideChariot"/> Chariot</div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="hidePaze"/>
+            <label for="hidePaze">Hide Paze</label>
           </div>
 
-          <!-- OUTPUTS -->
-          <div id="wallets-panel" class="full dynamic-panel">
-            <h3>Wallet Output</h3>
-            <div id="wallets-container"></div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="hideChariot"/>
+            <label for="hideChariot">Hide Chariot</label>
           </div>
 
-          <div id="merchant-panel" class="full dynamic-panel">
-            <h3>Merchant Status</h3>
-            <pre id="merchant-status"></pre>
+          <div class="checkbox-row">
+            <input type="checkbox" id="savePaymentMethod"/>
+            <label for="savePaymentMethod">Save Payment Method</label>
           </div>
 
+          <div class="checkbox-row">
+            <input type="checkbox" id="generateToken"/>
+            <label for="generateToken">Generate Token</label>
+          </div>
+
+          <div class="section">
+            <h3>Payload Preview</h3>
+            <pre id="payload-preview"></pre>
+          </div>
         </div>
 
       </div>
@@ -269,23 +228,5 @@
 
   <script src="https://payments2.deluxe.com/embedded/javascripts/deluxe.js"></script>
   <script type="module" src="app.js"></script>
-
-  <script>
-    document.getElementById("render-wallets-btn").onclick = () => {
-      document.getElementById("wallets-panel").classList.add("active");
-      document.getElementById("merchant-panel").classList.remove("active");
-    };
-
-    document.getElementById("merchant-status-btn").onclick = () => {
-      document.getElementById("merchant-panel").classList.add("active");
-      document.getElementById("wallets-panel").classList.remove("active");
-    };
-
-    document.getElementById("clear-btn").onclick = () => {
-      document.getElementById("wallets-panel").classList.remove("active");
-      document.getElementById("merchant-panel").classList.remove("active");
-    };
-  </script>
-
 </body>
 </html>
