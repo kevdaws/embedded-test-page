@@ -48,12 +48,12 @@
       margin-bottom: 20px;
     }
 
-    /* EMBEDDED CONTAINER */
+    /* ✅ UPDATED EMBEDDED CONTAINER (MORE VERTICAL SPACE) */
     #embeddedpayments {
       width: 100%;
-      min-height: 380px;
-      max-height: 420px;
-      overflow: hidden;
+      height: calc(100vh - 160px);
+      min-height: 600px;
+      overflow: visible;
     }
 
     label {
@@ -192,16 +192,6 @@
           <div class="checkbox-row">
             <input type="checkbox" id="hideChariot"/>
             <label for="hideChariot">Hide Chariot</label>
-          </div>
-
-          <div class="checkbox-row">
-            <input type="checkbox" id="savePaymentMethod"/>
-            <label for="savePaymentMethod">Save Payment Method</label>
-          </div>
-
-          <div class="checkbox-row">
-            <input type="checkbox" id="generateToken"/>
-            <label for="generateToken">Generate Token</label>
           </div>
 
           <div class="section">
