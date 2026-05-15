@@ -55,20 +55,7 @@ function renderEmbeddedPayments() {
 
       instance.render({
         containerId: "embeddedpayments",
-        walletsbgcolor: "#f0f0f0",
-        walletsborderradius: "5px",
-        walletspadding: "10px",
-        walletsgap: "5px",
-        walletswidth: "150px",
-        walletsheight: "50px",
-        walletsfontfamily: "Arial, sans-serif",
-        walletsfontcolor: "#333333",
-        paybuttoncolor: "#4CAF50",
-        productsbgcolor: "#ffffff",
-        productsfontcolor: "#000000",
-        productsfontsize: "14px",
-        cancelbuttoncolor: "#f44336",
-        paymentpanelstyle: "dark"
+        paymentpanelcolor: "#0f1115"
       });
     })
     .catch((err) => {
