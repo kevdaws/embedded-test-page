@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Deluxe Payments SDK Tester</title>
-  <link rel="stylesheet" href="styles.css"/>
 
   <style>
     body {
@@ -13,48 +12,59 @@
     }
 
     .page {
-      padding: 20px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      padding: 16px 20px;
+      border-bottom: 1px solid #eee;
     }
 
     .button-row button {
       margin-left: 8px;
     }
 
-    /* 🔥 CLEAN 2-COLUMN LAYOUT */
+    /* MAIN LAYOUT FULL HEIGHT */
     .main-layout {
+      flex: 1;
       display: flex;
-      gap: 30px;
-      align-items: flex-start;
+      height: calc(100vh - 70px);
     }
 
+    /* LEFT SIDE (SDK) */
     .left-panel {
-      flex: 1.1;
-      min-width: 380px;
+      flex: 1.2;
+      padding: 16px;
+      overflow: hidden;
     }
 
+    #embeddedpayments {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+
+    /* RIGHT SIDE (CONFIG FULL HEIGHT) */
     .right-panel {
       flex: 1;
       max-width: 420px;
-    }
-
-    /* 🔥 REMOVE CARD LOOKS */
-    .section {
-      margin-bottom: 20px;
-    }
-
-    /* 🔥 EMBEDDED CONTAINER SMALLER */
-    #embeddedpayments {
-      width: 100%;
-      min-height: 380px;
-      max-height: 420px;
+      border-left: 1px solid #eee;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
       overflow: hidden;
+    }
+
+    .config-scroll {
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 8px;
     }
 
     label {
@@ -78,8 +88,18 @@
 
     pre {
       padding: 10px;
-      overflow: auto;
       font-size: 12px;
+      overflow: auto;
+    }
+
+    /* DYNAMIC PANELS */
+    .dynamic-panel {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .dynamic-panel.active {
+      display: block;
     }
   </style>
 </head>
@@ -90,7 +110,6 @@
     <header class="header">
       <div>
         <h1>Deluxe Embedded Payments Tester</h1>
-        <p class="subtitle">Vanilla JS SDK Playground</p>
       </div>
 
       <div class="button-row">
@@ -101,34 +120,19 @@
       </div>
     </header>
 
-    <!-- 🔥 CLEAN LAYOUT -->
     <div class="main-layout">
 
       <!-- LEFT: SDK -->
       <div class="left-panel">
-
-        <div class="section">
-          <h2>Embedded Payments</h2>
-          <div id="embeddedpayments"></div>
-        </div>
-
-        <div class="section">
-          <h2>Wallets</h2>
-          <div id="wallets-container"></div>
-        </div>
-
-        <div class="section">
-          <h2>Merchant Status</h2>
-          <pre id="merchant-status"></pre>
-        </div>
-
+        <div id="embeddedpayments"></div>
       </div>
 
-      <!-- RIGHT: CONFIG -->
+      <!-- RIGHT: CONFIG (FULL HEIGHT) -->
       <div class="right-panel">
 
-        <div class="section">
-          <h2>Merchant Configuration</h2>
+        <div class="config-scroll">
+
+          <h3>Merchant Configuration</h3>
 
           <label>Access Token</label>
           <input id="accessToken"/>
@@ -152,10 +156,8 @@
             <option value="black">black</option>
             <option value="white">white</option>
           </select>
-        </div>
 
-        <div class="section">
-          <h2>Customer</h2>
+          <h3 style="margin-top:20px;">Customer</h3>
 
           <label>First Name</label>
           <input id="firstName"/>
@@ -180,10 +182,8 @@
 
           <label>Country Code</label>
           <input id="billingCountryCode" value="USA"/>
-        </div>
 
-        <div class="section">
-          <h2>Wallet Options</h2>
+          <h3 style="margin-top:20px;">Wallet Options</h3>
 
           <div class="checkbox-row">
             <input type="checkbox" id="hideApple"/>
@@ -215,18 +215,44 @@
             <label for="generateToken">Generate Token</label>
           </div>
 
-          <div class="section">
-            <h3>Payload Preview</h3>
-            <pre id="payload-preview"></pre>
+          <!-- 🔥 DYNAMIC SECTIONS (ONLY SHOW ON BUTTON CLICK) -->
+
+          <div id="wallets-panel" class="dynamic-panel">
+            <h3>Wallets Output</h3>
+            <div id="wallets-container"></div>
           </div>
+
+          <div id="merchant-panel" class="dynamic-panel">
+            <h3>Merchant Status</h3>
+            <pre id="merchant-status"></pre>
+          </div>
+
         </div>
-
       </div>
-    </div>
 
+    </div>
   </div>
 
   <script src="https://payments2.deluxe.com/embedded/javascripts/deluxe.js"></script>
   <script type="module" src="app.js"></script>
+
+  <script>
+
+    document.getElementById("render-wallets-btn").addEventListener("click", () => {
+      document.getElementById("wallets-panel").classList.add("active");
+      document.getElementById("merchant-panel").classList.remove("active");
+    });
+
+    document.getElementById("merchant-status-btn").addEventListener("click", () => {
+      document.getElementById("merchant-panel").classList.add("active");
+      document.getElementById("wallets-panel").classList.remove("active");
+    });
+
+    document.getElementById("clear-btn").addEventListener("click", () => {
+      document.getElementById("wallets-panel").classList.remove("active");
+      document.getElementById("merchant-panel").classList.remove("active");
+    });
+  </script>
+
 </body>
 </html>
